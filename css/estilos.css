@@ -65,6 +65,7 @@ body{
 .data-titulo, .data-info{
   font-family: gameFont;
   color: #E8CA06;
+  text-align: center;
 }
 .titulo-over{
   font-family: gameFont;
@@ -103,4 +104,20 @@ div[class^='col']{
   width: 99.4px;
   height: 96px;
 
+}
+
+.jst-hours {
+  float: left;
+}
+.jst-minutes {
+  float: left;
+}
+.jst-seconds {
+  float: left;
+}
+.jst-clearDiv {
+  clear: both;
+}
+.jst-timeout {
+  color: red;
 }

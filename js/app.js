@@ -25,12 +25,35 @@ function tituloAmarillo(elemento){
 
 $(document).ready(function() {
     tituloAmarillo($("#titulo"));  
-    tablero=generarAleatorios();
-    iniciarTablero(tablero);
-    repetidosx=iniciarRepetidosX();
-    repetidosy=iniciarRepetidosY();
-    verificarFilas(repetidosx);
-    verificarColumnas(repetidosy);
+    
+
+    $("#btnIniciar").click(function(){
+        if($(this).html()=="Iniciar"){
+            $(this).html("Jugando");
+            $('#timer').startTimer({
+                onComplete: function(){
+                console.log('Complete');
+                $("#btnIniciar").html("Reiniciar");
+                $("#panel").fadeOut("slow");
+                $(".panel-score").css("width","100%");
+                $(".panel-score").css("font-size","1.2em");
+            }
+            });
+
+            tablero=generarAleatorios();
+            iniciarTablero(tablero);
+            repetidosx=iniciarRepetidosX();
+            repetidosy=iniciarRepetidosY();
+            verificarFilas(repetidosx);
+            verificarColumnas(repetidosy);
+
+        }
+        
+        if($(this).html()=="Reiniciar"){
+            location.reload();
+        }
+        
+    });
 
     var origenid;
     var origensrc;
@@ -39,7 +62,6 @@ $(document).ready(function() {
         drag: function (event, ui) {
             origenid=$(this).attr("id");
             origensrc=$(this).attr("src");
-            
         },
         stop: function (event, ui) {
            $("#col-"+origenid).html("<img src='"+destinosrc+"' id='"+origenid+"'>");
@@ -61,12 +83,13 @@ $(document).ready(function() {
         //$(this).addClass( "ui-state-highlight");
         destinoid=$(this).attr("id");
         destinosrc=$(this).attr("src");
-        //console.log("Origen: "+origenid);
-        //console.log("Destino: "+destinoid);
-        //console.log("div: "+origendiv);
         $(this).attr("src",origensrc);
+        var movimientos=$("#movimientos-text").html();
+        movimientos=parseInt(movimientos)+1;
+        $("#movimientos-text").html(movimientos);
       }
     });
+
 
 });
 
@@ -148,6 +171,10 @@ function imprimirRepetidosX(repetidos){
             if(repetidos[i][j]==0){
                 //$("#d"+(cont)).css("opacity","0.2");
                 parpadear($("#d"+(cont)));
+                var n=$("#score-text").html();
+                n=parseInt(n)+10;
+                $("#score-text").html(n);
+
             }
         }
     }
@@ -161,6 +188,10 @@ function imprimirRepetidosY(repetidos){
             if(repetidos[j][i]==0){
                 //$("#d"+(cont)).css("opacity","0.2");
                 parpadear($("#d"+(cont)));
+                var n=$("#score-text").html();
+                n=parseInt(n)+10;
+                $("#score-text").html(n);
+
             }
         }
     }
@@ -243,4 +274,16 @@ function cargarTablero(){
         }
     }
     return tcargado;
+}
+
+function bajarDulces(){
+    var eliminados = new Array();
+    for (i=0;i<7;i++) {
+        eliminados[i]=new Array();
+        for (j=0;j<7;j++) {
+            //eliminados[i][j]=repetidosx[i][j];
+            //eliminados[i][j]=repetidosy[i][j];
+        }
+    }
+    console.log(eliminados.toString());
 }
